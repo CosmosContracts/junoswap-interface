@@ -87,7 +87,7 @@ export function NavigationSidebar({
           Swap
         </Button>
       </Link>
-      <Link href="/transfer" passHref>
+      {/* <Link href="/transfer" passHref>
         <Button
           as="a"
           variant="menu"
@@ -107,6 +107,28 @@ export function NavigationSidebar({
           selected={getIsLinkActive('/pools')}
         >
           Liquidity
+        </Button>
+      </Link> */}
+      <Link href="/limit-order" passHref>
+        <Button
+          as="a"
+          variant="menu"
+          size="large"
+          iconLeft={<ArrowUpIcon />}
+          selected={getIsLinkActive('/limit-order')}
+        >
+          Limit Order
+        </Button>
+      </Link>
+      <Link href="/stop-loss" passHref>
+        <Button
+          as="a"
+          variant="menu"
+          size="large"
+          iconLeft={<IconWrapper icon={<Open />} />}
+          selected={getIsLinkActive('/stop-loss')}
+        >
+          Stop Loss
         </Button>
       </Link>
     </StyledListForLinks>

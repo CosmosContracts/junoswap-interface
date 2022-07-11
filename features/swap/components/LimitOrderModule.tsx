@@ -9,16 +9,21 @@ import {
 
 import { useTokenToTokenPrice } from '../hooks'
 import { tokenSwapAtom } from '../swapAtoms'
+import { HorizontalDivider } from './Divider'
+import { RateInput } from './RateInput'
 import { TokenSelector } from './TokenSelector'
 import { TransactionAction } from './TransactionAction'
+import { Transactions } from './Transactions'
 import { TransactionTips } from './TransactionTips'
 
-type TokenSwapModuleProps = {
+type LimitOrderModuleProps = {
   /* will be used if provided on first render instead of internal state */
   initialTokenPair?: readonly [string, string]
 }
 
-export const TokenSwapModule = ({ initialTokenPair }: TokenSwapModuleProps) => {
+export const LimitOrderModule = ({
+  initialTokenPair,
+}: LimitOrderModuleProps) => {
   /* connect to recoil */
   const [[tokenA, tokenB], setTokenSwapState] = useRecoilState(tokenSwapAtom)
   const transactionStatus = useRecoilValue(transactionStatusState)
@@ -106,6 +111,8 @@ export const TokenSwapModule = ({ initialTokenPair }: TokenSwapModuleProps) => {
           onTokenSwaps={handleSwapTokenPositions}
           size={uiSize}
         />
+        <RateInput amount={0} onChange={() => {}} />
+        <HorizontalDivider size="small" />
         <TokenSelector
           header="to"
           readOnly
@@ -123,6 +130,7 @@ export const TokenSwapModule = ({ initialTokenPair }: TokenSwapModuleProps) => {
         tokenToTokenPrice={tokenPrice}
         size={uiSize}
       />
+      <Transactions />
     </>
   )
 }

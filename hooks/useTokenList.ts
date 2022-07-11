@@ -1,8 +1,11 @@
 import { useQuery } from 'react-query'
 
 import { TokenInfo, usePoolsListQuery } from '../queries/usePoolsListQuery'
+import { ChainInfos } from '../services/chain/chain-infos'
+import { ChainInfoWithExplorer } from '../services/chain/types'
 
 export type TokenList = {
+  chainInfos: Array<ChainInfoWithExplorer>
   base_token: TokenInfo
   tokens: Array<TokenInfo>
   tokensBySymbol: Map<string, TokenInfo>
@@ -28,6 +31,7 @@ export const useTokenList = () => {
         base_token: poolsListResponse.base_token,
         tokens: Array.from(tokenMapBySymbol.values()),
         tokensBySymbol: tokenMapBySymbol,
+        chainInfos: ChainInfos,
       }
     },
     {

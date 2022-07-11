@@ -3,7 +3,7 @@ import 'styles/globals.scss'
 import 'focus-visible'
 
 import { ErrorBoundary } from 'components/ErrorBoundary'
-import { TestnetDialog } from 'components/TestnetDialog'
+// import { TestnetDialog } from 'components/TestnetDialog'
 import {
   globalCss,
   styled,
@@ -62,7 +62,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <NextJsAppRoot>
           <ErrorBoundary>
             <Component {...pageProps} />
-            {__TEST_MODE__ && <TestnetDialog />}
+            {/* {__TEST_MODE__ && <TestnetDialog />} */}
             <Toaster position="top-right" toastOptions={{ duration: 10000 }} />
           </ErrorBoundary>
         </NextJsAppRoot>

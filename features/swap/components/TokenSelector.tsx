@@ -4,6 +4,7 @@ import {
   IconWrapper,
   Inline,
   styled,
+  Text,
   Union,
   useOnClickOutside,
 } from 'junoblocks'
@@ -16,6 +17,7 @@ import { SelectorToggle } from './SelectorToggle'
 import { TokenOptionsList } from './TokenOptionsList'
 
 type TokenSelectorProps = {
+  header?: string
   readOnly?: boolean
   disabled?: boolean
   amount: number
@@ -25,6 +27,7 @@ type TokenSelectorProps = {
 }
 
 export const TokenSelector = ({
+  header,
   readOnly,
   disabled,
   tokenSymbol,
@@ -43,7 +46,7 @@ export const TokenSelector = ({
   const [isInputForAmountFocused, setInputForAmountFocused] = useState(false)
 
   const shouldShowConvenienceBalanceButtons = Boolean(
-    !isTokenListShowing && tokenSymbol && !readOnly && availableAmount > 0
+    !isTokenListShowing && tokenSymbol && !readOnly && availableAmount >= 0
   )
 
   const handleAmountChange = (amount) => onChange({ tokenSymbol, amount })
@@ -146,6 +149,17 @@ export const TokenSelector = ({
       selected={isInputForAmountFocused || isInputForSearchFocused}
       ref={wrapperRef}
     >
+      {header && (
+        <StyledDivForWrapper>
+          <Text
+            variant="primary"
+            transform="capitalize"
+            css={{ paddingLeft: '10px', fontWeight: 'bolder' }}
+          >
+            {header}
+          </Text>
+        </StyledDivForWrapper>
+      )}
       <StyledDivForWrapper>
         <StyledDivForSelector>
           {isTokenListShowing && (
@@ -175,7 +189,7 @@ export const TokenSelector = ({
           {shouldShowConvenienceBalanceButtons && (
             <Inline gap={4} css={{ paddingLeft: '$8' }}>
               <ConvenienceBalanceButtons
-                disabled={availableAmount <= 0}
+                disabled={availableAmount < 0}
                 tokenSymbol={tokenSymbol}
                 availableAmount={availableAmount}
                 onChange={!disabled ? handleAmountChange : () => {}}

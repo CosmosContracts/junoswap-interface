@@ -14,6 +14,7 @@ import {
 import { ComponentPropsWithoutRef, useMemo } from 'react'
 
 import { TokenInfo } from '../queries/usePoolsListQuery'
+import { ChainInfoWithExplorer } from '../services/chain/types'
 import { getPropsForInteractiveElement } from '../util/getPropsForInteractiveElement'
 
 const StyledDivForScrollContainer = styled('div', {
@@ -23,6 +24,7 @@ const StyledDivForScrollContainer = styled('div', {
 export type TokenSelectListProps = {
   activeTokenSymbol?: string
   tokenList: Array<Pick<TokenInfo, 'symbol' | 'logoURI' | 'name'>>
+  chainInfos: Array<ChainInfoWithExplorer>
   onSelect: (tokenSymbol: string) => void
   fetchingBalanceMode: 'native' | 'ibc'
   visibleNumberOfTokensInViewport?: number
@@ -33,6 +35,7 @@ export type TokenSelectListProps = {
 export const TokenSelectList = ({
   activeTokenSymbol,
   tokenList,
+  chainInfos,
   onSelect,
   fetchingBalanceMode = 'native',
   visibleNumberOfTokensInViewport = 5.5,
@@ -128,6 +131,63 @@ export const TokenSelectList = ({
                   {fetchingBalanceMode === 'ibc' && (
                     <FetchBalanceTextForIbcTokenSymbol
                       tokenSymbol={tokenInfo.symbol}
+                    />
+                  )}
+                </Text>
+                <Text variant="caption" color="disabled">
+                  available
+                </Text>
+              </StyledDivForColumn>
+            </StyledButtonForRow>
+          )
+        })}
+        {chainInfos?.map((chainInfo) => {
+          return (
+            <StyledButtonForRow
+              role="listitem"
+              variant="ghost"
+              key={chainInfo.currencies[0].coinDenom}
+              selected={chainInfo.currencies[0].coinDenom === activeTokenSymbol}
+              {...getPropsForInteractiveElement({
+                onClick() {
+                  onSelect(chainInfo.currencies[0].coinDenom)
+                },
+              })}
+            >
+              <StyledDivForColumn kind="token">
+                <ImageForTokenLogo
+                  logoURI={`https://autonomy-osmosis-wrapper.netlify.app${chainInfo.currencies[0].coinImageUrl}`}
+                  size="big"
+                  alt={chainInfo.currencies[0].coinDenom}
+                  loading="lazy"
+                />
+                <div data-token-info="">
+                  <Text variant="body">
+                    {chainInfo.currencies[0].coinDenom}
+                  </Text>
+                  <Text variant="caption" color="disabled">
+                    {chainInfo.chainName}
+                  </Text>
+                </div>
+              </StyledDivForColumn>
+              <StyledDivForColumn kind="balance">
+                <Text
+                  variant="body"
+                  align="right"
+                  css={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    alignItems: 'flex-end',
+                  }}
+                >
+                  {fetchingBalanceMode === 'native' && (
+                    <FetchBalanceTextForNativeTokenSymbol
+                      tokenSymbol={chainInfo.currencies[0].coinDenom}
+                    />
+                  )}
+                  {fetchingBalanceMode === 'ibc' && (
+                    <FetchBalanceTextForIbcTokenSymbol
+                      tokenSymbol={chainInfo.currencies[0].coinDenom}
                     />
                   )}
                 </Text>

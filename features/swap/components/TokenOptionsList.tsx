@@ -5,12 +5,16 @@ export const TokenOptionsList = ({
   activeTokenSymbol,
   onSelect,
   ...props
-}: Omit<TokenSelectListProps, 'tokenList' | 'fetchingBalanceMode'>) => {
+}: Omit<
+  TokenSelectListProps,
+  'tokenList' | 'fetchingBalanceMode' | 'chainInfos'
+>) => {
   const [tokenList] = useTokenList()
   return (
     <TokenSelectList
       {...props}
       tokenList={tokenList.tokens}
+      chainInfos={tokenList.chainInfos}
       activeTokenSymbol={activeTokenSymbol}
       onSelect={onSelect}
       fetchingBalanceMode="native"

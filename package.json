@@ -22,6 +22,7 @@
     "@cosmjs/stargate": "0.27.0-rc2",
     "@headlessui/react": "^1.4.0",
     "@heroicons/react": "^1.0.3",
+    "@keplr-wallet/cosmos": "^0.10.11",
     "@next/bundle-analyzer": "^12.1.0",
     "@reach/portal": "^0.16.0",
     "@reach/tooltip": "^0.16.2",
